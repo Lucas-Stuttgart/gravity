@@ -17,9 +17,8 @@ Offizielle Anleitung: https://docs.github.com/de/pages/getting-started-with-gith
 ## Bedienung
 
 - Code `777` eingeben und Enter oder den Pfeil im Eingabefeld drücken.
-- Der Nein-Button weicht bei Maus/Touch höchstens dreimal aus. Danach bleibt er anklickbar.
-- Drei Nachfragen, dann ein freundliches „Schade …“.
-- „Direkt bei Nein bleiben“ beendet die Nachfrage jederzeit.
+- Der Nein-Button weicht bei Maus/Touch höchstens achtmal aus. Danach bleibt er anklickbar.
+- Drei eindeutig formulierte Nachfragen mit derselben Ja/Nein-Bedeutung, dann ein freundliches „Schade …“.
 - Ja zeigt Konfetti und „Du kannst die Bilder nun senden“.
 - Tastaturbedienung und die Systemeinstellung für reduzierte Bewegung werden berücksichtigt.
 

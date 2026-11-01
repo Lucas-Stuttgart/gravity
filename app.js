@@ -6,10 +6,11 @@ const experiences = {
 const $ = id => document.getElementById(id);
 const motion = matchMedia('(prefers-reduced-motion: reduce)');
 let dodges = 0, refusals = 0, screen = 'gate';
+const MAX_DODGES = 8;
 const followups = [
-  ['Bist du dir wirklich sicher?', 'Nur noch einmal nachgefragt. Versprochen … fast.', 'Der Button bleibt jetzt auch brav stehen.'],
-  ['Auch nicht ein klitzekleines?', 'Okay, das war mein allerbester Überredungsversuch.', 'Ein Nein ist natürlich völlig okay.'],
-  ['Letzte Nachfrage. Wirklich.', 'Bleibt es bei deinem Nein?', 'Diesmal ist es wirklich die letzte Runde.']
+  'Schickst du mir vielleicht doch Fußbilder?',
+  'Magst du mir wenigstens ein Fußbild schicken?',
+  'Letzte Frage: Schickst du mir ein Fußbild?'
 ];
 function show(id) {
   screen = id;
@@ -33,12 +34,11 @@ $('code-form').addEventListener('submit', event => {
 });
 $('code').addEventListener('input', () => { $('error').textContent = ''; $('code').removeAttribute('aria-invalid'); });
 function escapeNo() {
-  if (screen !== 'question' || dodges >= 3 || refusals || motion.matches) return false;
+  if (screen !== 'question' || dodges >= MAX_DODGES || refusals || motion.matches) return false;
   dodges++;
   const area = $('answer-zone'), no = $('no');
   const x = dodges % 2 ? 0 : area.clientWidth - no.offsetWidth;
   no.classList.add('escaped'); no.style.left = x + 'px'; no.style.top = '76px';
-  $('tease').textContent = ['Huch. Der Button hat eigene Pläne.', 'Er ist heute etwas schüchtern.', 'Okay, genug Verstecken. Jetzt bleibt er.'][dodges - 1];
   return true;
 }
 $('no').addEventListener('pointerenter', event => { if (event.pointerType === 'mouse') escapeNo(); });
@@ -46,23 +46,18 @@ $('no').addEventListener('click', event => {
   // Tastaturbedienung (detail === 0) funktioniert ohne Ausweichen.
   if (event.detail > 0 && escapeNo()) return;
   if (refusals < followups.length) {
-    const [title, subtitle, tease] = followups[refusals++];
-    $('question-title').textContent = title; $('subtitle').textContent = subtitle; $('tease').textContent = tease;
-    $('kicker').textContent = 'Kleine Verhandlungsrunde ' + refusals;
+    $('question-title').textContent = followups[refusals++];
     $('no').classList.remove('escaped'); $('no').style.left = ''; $('no').style.top = '';
     $('question-title').focus({preventScroll:true});
   } else finish(false);
 });
 function finish(accepted) {
   $('result-icon').textContent = accepted ? '♡' : '☾';
-  $('result-label').textContent = accepted ? 'IT’S A YES' : 'ALLES GUT';
   $('result-title').textContent = accepted ? 'Yaaay!' : 'Schade …';
-  $('result-text').textContent = accepted ? 'Du kannst die Bilder nun senden.' : 'Dein Nein ist angekommen.';
-  $('result-note').textContent = accepted ? 'Wenn du möchtest, schick sie mir einfach in unserem Chat.' : 'Kein Stress. Danke für deine ehrliche Antwort. ♡';
+  $('result-text').textContent = accepted ? 'Du kannst die Bilder nun senden.' : '';
   show('result'); if (accepted && !motion.matches) celebrate();
 }
 $('yes').addEventListener('click', () => finish(true));
-$('finish-no').addEventListener('click', () => finish(false));
 $('restart').addEventListener('click', () => location.reload());
 function celebrate() {
   const colors = ['#c5b0ff','#f1d2f3','#fff','#a58be6','#f1d497'];
