@@ -1,17 +1,29 @@
 'use strict';
 // Weitere Zugangscodes hier ergänzen. Dies ist kein sicherer Passwortschutz.
 const experiences = {
-  '777': { question: 'Schickst du mir', highlight: 'Fußbilder?' }
+  '777': {
+    question: 'Schickst du mir', highlight: 'Fußbilder?',
+    followups: [
+      'Schickst du mir vielleicht doch Fußbilder?',
+      'Magst du mir wenigstens ein Fußbild schicken?',
+      'Letzte Frage: Schickst du mir ein Fußbild?'
+    ],
+    success: 'Du kannst die Bilder nun senden.'
+  },
+  '555': {
+    question: 'Willst du mit mir eine', highlight: 'Thunfisch Pizza essen?',
+    followups: [
+      'Hast du vielleicht doch Lust auf eine Thunfisch Pizza mit mir?',
+      'Magst du mit mir ein Stück Thunfisch Pizza essen?',
+      'Letzte Frage: Willst du mit mir Thunfisch Pizza essen?'
+    ],
+    success: 'Dann lass uns zusammen Thunfisch Pizza essen! 🍕'
+  }
 };
 const $ = id => document.getElementById(id);
 const motion = matchMedia('(prefers-reduced-motion: reduce)');
-let dodges = 0, refusals = 0, screen = 'gate';
+let dodges = 0, refusals = 0, screen = 'gate', activeExperience = null;
 const MAX_DODGES = 8;
-const followups = [
-  'Schickst du mir vielleicht doch Fußbilder?',
-  'Magst du mir wenigstens ein Fußbild schicken?',
-  'Letzte Frage: Schickst du mir ein Fußbild?'
-];
 function show(id) {
   screen = id;
   ['gate', 'question', 'result'].forEach(name => { $(name).hidden = name !== id; });
@@ -27,6 +39,7 @@ $('code-form').addEventListener('submit', event => {
     $('gate').classList.remove('shake'); void $('gate').offsetWidth; $('gate').classList.add('shake');
     $('code').select(); return;
   }
+  activeExperience = config;
   $('error').textContent = ''; $('code').removeAttribute('aria-invalid');
   $('question-title').replaceChildren(document.createTextNode(config.question), document.createElement('br'));
   const em = document.createElement('em'); em.textContent = config.highlight; $('question-title').append(em);
@@ -45,8 +58,8 @@ $('no').addEventListener('pointerenter', event => { if (event.pointerType === 'm
 $('no').addEventListener('click', event => {
   // Tastaturbedienung (detail === 0) funktioniert ohne Ausweichen.
   if (event.detail > 0 && escapeNo()) return;
-  if (refusals < followups.length) {
-    $('question-title').textContent = followups[refusals++];
+  if (refusals < activeExperience.followups.length) {
+    $('question-title').textContent = activeExperience.followups[refusals++];
     $('no').classList.remove('escaped'); $('no').style.left = ''; $('no').style.top = '';
     $('question-title').focus({preventScroll:true});
   } else finish(false);
@@ -54,7 +67,7 @@ $('no').addEventListener('click', event => {
 function finish(accepted) {
   $('result-icon').textContent = accepted ? '♡' : '☾';
   $('result-title').textContent = accepted ? 'Yaaay!' : 'Schade …';
-  $('result-text').textContent = accepted ? 'Du kannst die Bilder nun senden.' : '';
+  $('result-text').textContent = accepted ? activeExperience.success : '';
   show('result'); if (accepted && !motion.matches) celebrate();
 }
 $('yes').addEventListener('click', () => finish(true));

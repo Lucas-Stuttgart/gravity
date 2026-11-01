@@ -10,30 +10,21 @@ Eine statische, responsive Website mit Bootstrap 5.3.8, dunklem Gravity-Linienfe
 4. Im Repository **Settings → Pages** öffnen.
 5. Unter **Build and deployment → Source** die Option **Deploy from a branch** wählen.
 6. Branch **main**, Ordner **/(root)** auswählen und **Save** anklicken.
-7. Nach der Bereitstellung zeigt GitHub dort die Website-URL an. Diese URL und den Code `777` kannst du weitergeben.
+7. Nach der Bereitstellung zeigt GitHub dort die Website-URL an. Diese URL und den gewünschten Code (`777` oder `555`) kannst du weitergeben.
 
 Offizielle Anleitung: https://docs.github.com/de/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site
 
 ## Bedienung
 
-- Code `777` eingeben und Enter oder den Pfeil im Eingabefeld drücken.
+- Code `777` (Fußbilder) oder `555` (Thunfisch Pizza) eingeben und Enter oder den Pfeil im Eingabefeld drücken.
 - Der Nein-Button weicht bei Maus/Touch höchstens achtmal aus. Danach bleibt er anklickbar.
 - Drei eindeutig formulierte Nachfragen mit derselben Ja/Nein-Bedeutung, dann ein freundliches „Schade …“.
-- Ja zeigt Konfetti und „Du kannst die Bilder nun senden“.
+- Ja zeigt Konfetti und eine zum jeweiligen Code passende Abschlussmeldung.
 - Tastaturbedienung und die Systemeinstellung für reduzierte Bewegung werden berücksichtigt.
 
 ## Anpassen
 
-In `app.js` steht am Anfang das Objekt `experiences`. Weitere Codes können dort eigene Fragen bekommen, zum Beispiel:
-
-```js
-const experiences = {
-  '777': { question: 'Schickst du mir', highlight: 'Fußbilder?' },
-  '888': { question: 'Hast du Lust auf', highlight: 'einen Kaffee?' }
-};
-```
-
-Die Nachfragen findest du in `followups`, die Abschlussmeldungen in `finish()`. Farben und Animationen stehen in `style.css`.
+In `app.js` steht am Anfang das Objekt `experiences`. Jeder Code enthält `question` und `highlight` für die Frage, `followups` für die Nachfragen sowie `success` für die Abschlussmeldung. Kopiere einen vollständigen Eintrag, um weitere Codes hinzuzufügen. Die Anzahl der Ausweichmanöver steht in `MAX_DODGES`. Farben und Animationen stehen in `style.css`.
 
 ## Technische Hinweise
 
