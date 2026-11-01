@@ -10,13 +10,13 @@ Eine statische, responsive Website mit Bootstrap 5.3.8, dunklem Gravity-Linienfe
 4. Im Repository **Settings → Pages** öffnen.
 5. Unter **Build and deployment → Source** die Option **Deploy from a branch** wählen.
 6. Branch **main**, Ordner **/(root)** auswählen und **Save** anklicken.
-7. Nach der Bereitstellung zeigt GitHub dort die Website-URL an. Diese URL und den gewünschten Code (`777` oder `555`) kannst du weitergeben.
+7. Nach der Bereitstellung zeigt GitHub dort die Website-URL an. Diese URL und den gewünschten Code (`777`, `555` oder `444`) kannst du weitergeben.
 
 Offizielle Anleitung: https://docs.github.com/de/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site
 
 ## Bedienung
 
-- Code `777` (Fußbilder) oder `555` (Thunfisch Pizza) eingeben und Enter oder den Pfeil im Eingabefeld drücken.
+- Code `777` (Fußbilder) , `555` (Thunfisch Pizza) oder `444` (Sleepcall) eingeben und Enter oder den Pfeil im Eingabefeld drücken.
 - Der Nein-Button weicht bei Maus/Touch höchstens achtmal aus. Danach bleibt er anklickbar.
 - Drei eindeutig formulierte Nachfragen mit derselben Ja/Nein-Bedeutung, dann ein freundliches „Schade …“.
 - Ja zeigt Konfetti und eine zum jeweiligen Code passende Abschlussmeldung.
